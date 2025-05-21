@@ -1,4 +1,9 @@
 public class Main{
-    jhgjjhry
-    jkdshhfjkjhfsdkjfjkjkfgdsjjjdsjfgjhfsdjksdfkjsjnjhkl
+public static void main(String[]args){
+System.out.println("Welome to the Brooklyn Tech Library Tracker");
+
+
+    
+}
+
 }

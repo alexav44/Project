@@ -2,15 +2,21 @@
 <html lang = "en">
   <head>
 <style>
+    body {
+    background-color:#B2AC88;
+    color: #355A55;
+    font-family: comic sans ms;
+  }
    .everything {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      align-content: space-between;
-      flex-wrap: wrap;
-      flex-direction: row-reverse;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    align-content: flex-start;
+    flex-wrap: nowrap;
+    flex-direction: row;
     }
    .title {
+     color: black
       text-align: center;
       margin-top: 20px;
     }
@@ -20,18 +26,22 @@
       border: 25px solid #c3c29c;
       transition: transform 0.3s ease-in-out, filter 0.3s ease-in-out;
     }
-  .navbar {
-      color: white;
-      background: black;
+      .navBar {
+      color: black ;
+      background: white;
       height: 10vh;
       display: flex;
       justify-content: space-evenly;
       align-items: center;
     }
+
+  
+      
+    }
   
     h1 {
       font-size: 40px;
-      color: white;
+      color: black;
     }
 
     h2 {
@@ -42,27 +52,26 @@
       font-size: 20px;
       color: black;
     }
-  .body{
-    color: blue
-  }
 </style>
     <title>Library Check in </title>
   </head>
-//html coding
+
 <body>
-  <div class = "title">
-    <h1>Library Tracker</h1>
+    <div class="title">
+    <h1>Library Check-in</h1>
   </div>
+  
+  
   <div class = "navBar">
     <a href = "./front.html" class = "navBar"> Main Page</a>
     <a href = "./admin.html" class = "navBar"> Admin Only</a>
   </div>
   
-  //this div will contain info and the first question (modeled after myself)
+  this div will contain info and the first question (modeled after myself)
       <div class="everything">
     <div class="paragraph">
       <h2>Is the library open?</h2>
-      <h3>Enter the period:</h3>
+      <h2>Enter the period:</h2>
       //put something that allows the user to enter the period and something stating yes or no should appear from the admin 
     </div>
 <div class="image2">

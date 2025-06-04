@@ -1,28 +1,123 @@
-<html>
-  <head>
-    <style>
- .navbar {
-      color: white;
-      background: black;
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Library Admin</title>
+  <style>
+    body {
+      background-color: #CCE6F4;
+      color: #355A55;
+      font-family: comic sans ms;
+    }
+
+    .title {
+      color: black;
+      text-align: center;
+      margin-top: 20px;
+    }
+
+    .navBar {
+      background: white;
       height: 10vh;
       display: flex;
       justify-content: space-evenly;
       align-items: center;
-}
-      
-    </style>
-  </head>
-  <body>
-        <div class ="title">
-      <h2>Welcome</h2>
+    }
+
+
+    .clicking {
+      text-align: center;
+      margin-top: 30px;
+    }
+
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      margin: 10px;
+      cursor: pointer;
+    }
+
+    .output {
+      margin-top: 15px;
+      font-size: 18px;
+    }
+
+    h1, h2, h3 {
+      color: black;
+    }
+  </style>
+</head>
+<body>
+  <div class="title">
+    <h1>Library Check-in</h1>
+  </div>
+
+  <div class="navBar">
+    <a href="./front.html">Main Page</a>
+    <a href="./admin.html">Admin Only</a>
+  </div>
+
+  <div class="clicking">
+    <h2>Click when a student enters the library:</h2>
+    <button onclick="checkIn()">Student Entered</button>
+    <button onclick="resetCounts()">Reset Count</button>
+
+    <div class="output">
+      <h3>Number of people in library: <span id="studentsIn">0</span></h3>
+      <h3>Available seats left: <span id="availableSeats">150</span></h3>
+      <h3>Available computer seats: <span id="computerSeats">0</span></h3>
+      <button onclick="askComputerSeats()">Update Computer Seats</button>
     </div>
-    <div class = "clicking">
-      // here will be a button that allows the librarian to click every student that enters
-      // here will be a small screen that allows the libarian to see the number of students 
-      // the avalible seat number will be the total(150) subtracted by the number of clicks 
-      // a question box will ask the admin out of the avalible seats how many are computers
-    </div>
-   
+  </div>
+
+  <script>
+    const totalSeats = 150;
+    let studentsCount = parseInt(localStorage.getItem("studentsIn")) || 0;
+    let computerSeats = parseInt(localStorage.getItem("computerSeats")) || 0;
+
+    function checkIn() {
+      if (studentsCount < totalSeats) {
+        studentsCount++;
+        localStorage.setItem("studentsIn", studentsCount);
+        updateDisplay();
+      } else {
+        alert("Library is full!");
+      }
+    }
+
+    function askComputerSeats() {
+      let available = totalSeats - studentsCount;
+      let input = prompt("Out of the " + available + " available seats, how many are computers?");
+      if (input !== null) {
+        let number = parseInt(input);
+        if (!isNaN(number) && number >= 0 && number <= available) {
+          computerSeats = number;
+          localStorage.setItem("computerSeats", computerSeats);
+          updateDisplay();
+        } else {
+          alert("Please enter a valid number between 0 and " + available);
+        }
+      }
+    }
+
+    function resetCounts() {
+      if (confirm("Are you sure you want to reset all counts?")) {
+        studentsCount = 0;
+        computerSeats = 0;
+        localStorage.setItem("studentsIn", studentsCount);
+        localStorage.setItem("computerSeats", computerSeats);
+        updateDisplay();
+      }
+    }
+
+    function updateDisplay() {
+      document.getElementById("studentsIn").textContent = studentsCount;
+      document.getElementById("availableSeats").textContent = totalSeats - studentsCount;
+      document.getElementById("computerSeats").textContent = computerSeats;
+    }
+
     
-  </body>
+    updateDisplay();
+  </script>
+</body>
 </html>

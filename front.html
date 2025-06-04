@@ -1,33 +1,33 @@
 <!DOCTYPE html>
-<html lang = "en">
-  <head>
-<style>
+<html lang="en">
+<head>
+  <style>
     body {
-    background-color:#B2AC88;
-    color: #355A55;
-    font-family: comic sans ms;
-  }
-   .everything {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    align-content: flex-start;
-    flex-wrap: nowrap;
-    flex-direction: row;
+      background-color: #E17F93;
+      color: #355A55;
+      font-family: comic sans ms;
     }
-   .title {
-     color: black
+
+    .everything {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: row;
+    }
+
+    .title {
+      color: black;
       text-align: center;
       margin-top: 20px;
     }
-   img {
+
+    img {
       width: 600px;
       margin: 10px;
       border: 25px solid #c3c29c;
-      transition: transform 0.3s ease-in-out, filter 0.3s ease-in-out;
     }
-      .navBar {
-      color: black ;
+
+    .navBar {
       background: white;
       height: 10vh;
       display: flex;
@@ -36,60 +36,111 @@
     }
 
   
-      
+
+    .paragraph, .avalible, .computers {
+      background: white;
+      border: 2px solid #333;
+      border-radius: 30px;
+      padding: 20px;
+      margin: 20px auto;
+      text-align: center;
+      width: 80%;
     }
-  
-    h1 {
-      font-size: 40px;
+
+    h1, h2, h3 {
       color: black;
     }
 
-    h2 {
-      color: black;
+    input, button {
+      padding: 10px;
+      margin-top: 10px;
+      font-size: 16px;
+    }
+    .images{
+    display: flex;
+    justify-content: center;
+    align-content: flex-start;
+    flex-wrap: nowrap;
+    flex-direction: row;
+    align-items: flex-start;
     }
 
-    h3 {
-      font-size: 20px;
-      color: black;
-    }
-</style>
-    <title>Library Check in </title>
-  </head>
+  </style>
+  <title>Library Check-in</title>
+</head>
 
 <body>
-    <div class="title">
+  <div class="title">
     <h1>Library Check-in</h1>
   </div>
-  
-  
-  <div class = "navBar">
-    <a href = "./front.html" class = "navBar"> Main Page</a>
-    <a href = "./admin.html" class = "navBar"> Admin Only</a>
+
+  <div class="navBar">
+    <a href="./front.html">Main Page</a>
+    <a href="./admin.html">Admin Only</a>
   </div>
-  
-  this div will contain info and the first question (modeled after myself)
-      <div class="everything">
+
+  <div class="everything">
     <div class="paragraph">
       <h2>Is the library open?</h2>
-      <h2>Enter the period:</h2>
-      //put something that allows the user to enter the period and something stating yes or no should appear from the admin 
+      <p>Enter the current period (1–10):</p> 
+      <input type="number" id="periodInput" min="1" max="10" /> 
+      <button onclick="checkIfOpen()">Check</button>
+      <h3 id="openStatus">Status: --</h3> 
     </div>
-<div class="image2">
+
+    <div class="image2">
       <img src="https://static.wixstatic.com/media/f03fb3_9885e34bc28945eb8b517386cc66a0e1~mv2.jpg/v1/fill/w_640,h_640,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/f03fb3_9885e34bc28945eb8b517386cc66a0e1~mv2.jpg">
     </div>
   </div>
 
-    <div class = "avalible">
+  <div class="avalible">
     <h2>How many seats are open?</h2>
+    <h3 id="seatsAvailable">--</h3> 
   </div>
-//allow the number that the libarians would put in as avalible seats here if the period is open and there are avalible seats, returning zero if there are none 
 
-  <div class = "computers">
-    //how many of the computer seats are left of those avalible seats should be shown (information from the admin)
+  <div class="computers">
+    <h2>How many of those are computers?</h2>
+    <h3 id="computersAvailable">--</h3> 
   </div>
-  
-  
-  
+  <div class = "images">
+  <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRJnVvM5E29S68NBAPa3WSjdGikyluSDBqmm5SR3NtnthpI7GgA7fZeKggg8vyn0XGHdp8&usqp=CAU">
+     <img src="https://static.wixstatic.com/media/f03fb3_8359aed781aa4014b7bcd7154974bc03~mv2.jpg/v1/fill/w_267,h_200,al_c,q_80,usm_0.66_1.00_0.01,enc_avif,quality_auto/f03fb3_8359aed781aa4014b7bcd7154974bc03~mv2.jpg">
+     <img src="https://surveybths.com/wp-content/uploads/2021/09/oexJZ6KkwpkUGOpEzSNAoJ2b232XKXPIagVQIx8S-e1638549004339.jpeg">
+  <script>
+    function checkIfOpen() {
+      const period = parseInt(document.getElementById("periodInput").value); 
+      const openPeriods = [1, 2, 4, 5, 6, 7, 8, 9, 10];
+      const statusEl = document.getElementById("openStatus");
+
+      if (isNaN(period) || period < 1 || period > 10) {
+        statusEl.textContent = "Status: Invalid period"; 
+        return;
+      } 
+
+      const isOpen = openPeriods.includes(period); 
+      statusEl.textContent = "Status: " + (isOpen ? "Yes, the library is open" : "No, the library is closed"); 
+
+      // Update seat/computer counts only if open
+      if (isOpen) {
+        updateData();
+      } else {
+        document.getElementById("seatsAvailable").textContent = "0"; 
+        document.getElementById("computersAvailable").textContent = "0";
+      }
+    }
+
+    function updateData() {
+      const totalSeats = 150;
+      const students = parseInt(localStorage.getItem("studentsIn")) || 0; 
+      const computers = parseInt(localStorage.getItem("computerSeats")) || 0; 
+
+      const availableSeats = Math.max(totalSeats - students, 0);
+     
+
+      document.getElementById("seatsAvailable").textContent = availableSeats; 
+      document.getElementById("computersAvailable").textContent = computers; 
+    }
+  </script>
 </body>
-
 </html>
+
